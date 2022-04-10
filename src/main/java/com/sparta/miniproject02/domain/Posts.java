@@ -1,6 +1,7 @@
 package com.sparta.miniproject02.domain;
 
 
+import com.sparta.miniproject02.dto.PostsRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,17 +21,29 @@ public class Posts extends Timestamped{
     private Long id;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
     private String contents;
 
+
+    @Column(columnDefinition = "TEXT")
+    private String imgUrl;
+    //546546465453
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "posts" , cascade = CascadeType.REMOVE)
     private List<Comments> commentsList;
 
 
+
+
+
+    //내용 수정, //사진 수정 생각해야됨.
+    public void update(PostsRequestDto postsRequestDto) {
+
+        this.contents = postsRequestDto.getContents();
+
+    }
 }
+
