@@ -1,6 +1,7 @@
 package com.sparta.miniproject02.domain;
 
 
+import com.sparta.miniproject02.dto.CommentsRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,5 +25,14 @@ public class Comments extends Timestamped {
     @JoinColumn(name = "posts_id",nullable = false)
     private Posts posts;
 
+    public Comments(CommentsRequestDto commentsRequestDto, Posts posts){
+        this.contents = commentsRequestDto.getContents();
+        this.posts = posts;
+    }
 
+
+    public Long update(CommentsRequestDto commentsRequestDto) {
+        this.contents = commentsRequestDto.getContents();
+        return id;
+    }
 }
