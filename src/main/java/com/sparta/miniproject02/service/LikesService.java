@@ -4,6 +4,7 @@ import com.sparta.miniproject02.domain.Likes;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.LikeRequestDto;
 import com.sparta.miniproject02.repository.LikesRepository;
+import com.sparta.miniproject02.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class LikesService {
 //        Posts posts = postsRepository.findById(postId).orElseThrow(
 //                () -> new NullPointerException("해당 게시글이 존재하지 않습니다.")
 //        );
-        Optional<Likes> likes = likesRepository.findByPosts_IdAndUser_Id(postId, likeUser);
+        Optional<Likes> likes = likesRepository.findByPostsIdAndLikeUserId(postId, likeUser);
 
         // isPresent을 사용하기 위해선 Optional 로 감싸야 함
         // 반환값이 null 값 여부 확인, null을 반환하면서 발생되는 오류를 줄여줌

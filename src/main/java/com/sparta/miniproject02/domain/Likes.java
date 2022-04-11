@@ -1,6 +1,5 @@
 package com.sparta.miniproject02.domain;
 
-import com.sparta.miniproject02.dto.LikeRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,15 +16,19 @@ public class Likes {
     @Column(name = "Heart_Id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "posts_id")
-    private Posts posts;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "posts_id")
+//    private Posts posts;
 
+    @Column
+    private Long postsId;
+
+    @Column
     private Long likeUserId;
 
-    public Likes(LikeRequestDto requestDto, Posts posts){
-        this.likeUserId = requestDto.getLikeUserId();
-        this.posts = posts;
+    public Likes(Long likeUserId, Long postsId){
+        this.postsId = postsId;
+        this.likeUserId = likeUserId;
     }
 
 }
