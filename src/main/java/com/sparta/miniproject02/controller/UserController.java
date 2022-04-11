@@ -1,15 +1,16 @@
 package com.sparta.miniproject02.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sparta.miniproject02.config.JwtTokenProvider;
 import com.sparta.miniproject02.domain.User;
 import com.sparta.miniproject02.dto.SignupRequestDto;
 import com.sparta.miniproject02.repository.UserRepository;
-import com.sparta.miniproject02.security.UserDetailsImpl;
 import com.sparta.miniproject02.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,6 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final KakaoUserService kakaoUserService;
 
 
     //회원가입
@@ -56,17 +56,18 @@ public class UserController {
 
 
 
-
-    //카카오 회원가입 및 로그인 요청 처리
-    @GetMapping("/user/kakao/callback")
-    public List<Map<String,String>> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        return kakaoUserService.kakaoLogin(code, response);
-    }
+//
+//    //카카오 회원가입 및 로그인 요청 처리
+//    @GetMapping("/user/kakao/callback")
+//    public List<Map<String,String>> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+//        return kakaoUserService.kakaoLogin(code, response);
+//    }
 
 
     //아이디 중복확인
     @PostMapping("/api/user/checkid")
     public String checkId(@RequestBody SignupRequestDto signupRequestDto) {
+
         return userService.checksId(signupRequestDto.getUsername());
     }
 

@@ -1,6 +1,6 @@
 package com.sparta.miniproject02.config;
 
-import com.sparta.miniproject02.entity.User;
+import com.sparta.miniproject02.domain.User;
 import com.sparta.miniproject02.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
