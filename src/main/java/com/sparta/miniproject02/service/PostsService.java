@@ -47,9 +47,11 @@ public class PostsService {
          Posts posts = findPost.orElseThrow( () -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
 
+
          return PostsResponseDto.builder()
-                 .id(posts.getId())
+//                 .id(posts.getId())
                  .contents(posts.getContents())
+                 .imgUrl(posts.getImgUrl())
                  .build();
 
     }
