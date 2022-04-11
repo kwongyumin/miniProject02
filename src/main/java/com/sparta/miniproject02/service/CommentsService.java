@@ -4,6 +4,7 @@ import com.sparta.miniproject02.domain.Comments;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.CommentsRequestDto;
 import com.sparta.miniproject02.repository.CommentsRepository;
+import com.sparta.miniproject02.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
