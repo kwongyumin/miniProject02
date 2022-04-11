@@ -1,9 +1,11 @@
 package com.sparta.miniproject02.controller;
 
 
+import com.sparta.miniproject02.domain.Comments;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.PostsRequestDto;
 import com.sparta.miniproject02.dto.PostsResponseDto;
+import com.sparta.miniproject02.repository.CommentsRepository;
 import com.sparta.miniproject02.service.PostsService;
 import com.sparta.miniproject02.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ import java.util.List;
 @CrossOrigin(origins ="*")
 public class PostsController {
 
-
+    private final CommentsRepository commentsRepository;
     private final PostsService postsService;
     private final S3Service s3Service;
 
@@ -43,15 +45,29 @@ public class PostsController {
     @GetMapping("/api/posts/{post_id}")
     public PostsResponseDto findByPostId(@PathVariable(value = "post_id") Long postid){
 
+        //1번 게시글에 작성한 댓글 리스트 ;
+
+
+
+        //1번 아이디 에 대한 정보가 담겨있음.
         return postsService.findByPostId(postid);
+            // 1, 2, 3 댓글이 Postid 1 번에 쌓인다. -> list 형태로 받아준다.
+
+        ////List<Comments> commentsList = commentsRepository.findByPostsIdOrderByModifiedAtDesc(postid);
+            //
+
     }
 
 
     //객체 pk를 받아와서 수정 ,
     @PutMapping("/api/posts/modify/{post_id}")
     public Long postModifyById(@PathVariable(value = "post_id") Long postid
-            ,@RequestBody PostsRequestDto postsRequestDto){
+            ,@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file){
 
+        //파일을 받아와서 기존의 저장되어있는 값은 삭제한뒤 , 포스트 업데이트,
+        String imgPath = s3Service.upload(file,postsRequestDto.getImgUrl());
+
+        postsRequestDto.setImgUrl(imgPath);
         return postsService.postUpdate(postid, postsRequestDto);
         //객체가 성공적으로 수정된다면 , pk값을 반환 . -> pk값 활용하여 수정완료후의 페이지로 이동가능하다
 

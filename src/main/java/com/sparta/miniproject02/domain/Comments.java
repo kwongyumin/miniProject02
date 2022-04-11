@@ -18,12 +18,16 @@ public class Comments extends Timestamped {
     @Column(name = "comments_id")
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String contents;
 
     @ManyToOne
     @JoinColumn(name = "posts_id",nullable = false)
     private Posts posts;
+
+
+
+
 
     public Comments(CommentsRequestDto commentsRequestDto, Posts posts){
         this.contents = commentsRequestDto.getContents();

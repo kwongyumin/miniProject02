@@ -32,7 +32,7 @@ public class Posts extends Timestamped{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "posts" , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "posts" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Comments> commentsList;
 
 
@@ -40,6 +40,7 @@ public class Posts extends Timestamped{
     public void update(PostsRequestDto postsRequestDto) {
 
         this.contents = postsRequestDto.getContents();
+        this.imgUrl = postsRequestDto.getImgUrl();
 
     }
 }

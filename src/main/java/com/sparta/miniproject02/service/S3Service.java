@@ -6,6 +6,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,9 @@ public class S3Service {
 
     @Value("${cloud.aws.region.static}")
     private String region;
+    //yml에서 bucket 인식 안됨;
 
+    private final String bucket = "mini-project02";
 
     @PostConstruct
     public void setS3Client() {
@@ -46,14 +49,13 @@ public class S3Service {
                 .build();
     }
 
+    // 최초 게시글 작성 시 업로드
     public String upload(MultipartFile file){
         String fileName = createFileName(file.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
 
-        //    //yml 에서 bucket을 인식을 못함,
-        String bucket = "mini-project02";
         try(InputStream inputStream = file.getInputStream()) {
             s3Client.putObject(new PutObjectRequest(bucket,fileName,inputStream,objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
@@ -62,9 +64,34 @@ public class S3Service {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"파일 업로드에 실패하셨습니다");
         }
 
+    }
 
+    // 글 수정 시 기존 s3에 있는 이미지 정보 삭제,
+    public String upload(MultipartFile file,String currentFilePath){
+        String fileName = createFileName(file.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
+
+        //    //yml 에서 bucket을 인식을 못함,
+        if(!"".equals(currentFilePath) && currentFilePath != null){
+            boolean isExistObject = s3Client.doesObjectExist(bucket,currentFilePath);
+            if(isExistObject){
+                s3Client.deleteObject(bucket,currentFilePath);
+            }
+        }
+
+        try(InputStream inputStream = file.getInputStream()) {
+            s3Client.putObject(new PutObjectRequest(bucket,fileName,inputStream,objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            return s3Client.getUrl(bucket, fileName).toString();
+        }catch (IOException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"파일 업로드에 실패하셨습니다");
+        }
 
     }
+
+
 
     private String createFileName(String fileName) {
         // 먼저 파일 업로드 시, 파일명을 난수화하기 위해 random으로 돌립니다.
@@ -73,7 +100,7 @@ public class S3Service {
 
     private String getFileExtension(String fileName) {
         // file 형식이 잘못된 경우를 확인하기 위해 만들어진 로직이며,
-        // 파일 타입과 상관없이 업로드할 수 있게 하기 위해 .의 존재 유무만 판단하였습니다.
+        // 파일 타입과 상관없이 업로드할 수 있게 하기 위해 .의 존재 유무만 판단
         try {
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
