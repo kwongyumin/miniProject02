@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 
 @EnableScheduling
@@ -13,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class MiniProject02Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(HoApplication.class, args);
+        SpringApplication.run(MiniProject02Application.class, args);
     }
     @Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {

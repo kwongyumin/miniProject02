@@ -1,4 +1,4 @@
-package com.sparta.miniproject02.controller;
+package com.sparta.miniproject02.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

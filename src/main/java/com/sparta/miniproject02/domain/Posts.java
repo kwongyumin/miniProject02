@@ -36,9 +36,6 @@ public class Posts extends Timestamped{
     private List<Comments> commentsList;
 
 
-
-
-
     //내용 수정, //사진 수정 생각해야됨.
     public void update(PostsRequestDto postsRequestDto) {
 

@@ -1,6 +1,5 @@
 package com.sparta.miniproject02.config;
 
-import com.sparta.miniproject02.controller.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
