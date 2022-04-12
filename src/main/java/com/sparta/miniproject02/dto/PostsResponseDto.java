@@ -18,9 +18,7 @@ public class PostsResponseDto {
     private String username;
     private String contents;
     private String imgUrl;
-//    private List<Comments> commentsList;
-
-    private List<String> comment;
+    private List<Comments> commentsList;
 
 
 }

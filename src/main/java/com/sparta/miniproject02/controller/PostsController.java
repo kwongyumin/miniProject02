@@ -1,6 +1,7 @@
 package com.sparta.miniproject02.controller;
 
 
+import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.domain.Comments;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.PostsRequestDto;
@@ -9,17 +10,17 @@ import com.sparta.miniproject02.repository.CommentsRepository;
 import com.sparta.miniproject02.service.PostsService;
 import com.sparta.miniproject02.service.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin(origins ="http://localhost:3000, http://3.35.27.159:8080")
 public class PostsController {
 
     private final CommentsRepository commentsRepository;
@@ -27,21 +28,37 @@ public class PostsController {
     private final S3Service s3Service;
 
     //포스팅 전체목록을 리턴한다.
+//    @GetMapping("/api/posts")
+//    public List<Posts> findAllPosts(){
+//
+//        return postsService.findAllPosts();
+//
+//    }
+
     @GetMapping("/api/posts")
-    public List<Posts> findAllPosts(){
+    public Map<String,Object> findAllPosts(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        Map<String,Object> result = new HashMap<>();
+         String username = userDetails.getUsername();
 
-        return postsService.findAllPosts();
+         List<Posts> findAllPostsList = postsService.findAllPosts();
 
+         result.put("username",username);
+         result.put("result",findAllPostsList);
+
+         return result;
     }
+
+
 
     //요청값을 받아와 저장한다.
     @PostMapping("/api/posts/write")
-    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file) {
+    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
+                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String imgPath = s3Service.upload(file);
         //이미지 경로를 받아온다.
         postsRequestDto.setImgUrl(imgPath);
         //Dto에 담아준뒤 , 서비스 로직에 넘긴다.
-        postsService.Posting(postsRequestDto);
+        postsService.Posting(postsRequestDto, userDetails);
     }
 
     //특정 객체를 찾아서 조회하여준다.
@@ -52,8 +69,10 @@ public class PostsController {
 
         PostsResponseDto postsResponseDto = postsService.findByPostId(postid);
 
+
         result.put("contents",postsResponseDto.getContents());
         result.put("imgUrl",postsResponseDto.getImgUrl());
+
 
         List<Comments> commentsList = commentsRepository.findByPostsIdOrderByModifiedAtDesc(postsResponseDto.getId());
 

@@ -1,7 +1,7 @@
 package com.sparta.miniproject02.service;
 
 
-import com.sparta.miniproject02.domain.Comments;
+import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.PostsRequestDto;
 import com.sparta.miniproject02.dto.PostsResponseDto;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,12 +30,15 @@ public class PostsService {
 
 
 
+
+
     // 단일 객체 저장 
     @Transactional
-    public void Posting(PostsRequestDto postsRequestDto) {
+    public void Posting(PostsRequestDto postsRequestDto, UserDetailsImpl userDetails) {
 
         Posts posts = Posts.builder()
                 //.user() JWT 사용
+                .user(userDetails.getUser())
                 .contents(postsRequestDto.getContents())
                 .imgUrl(postsRequestDto.getImgUrl())
                 .build();
@@ -50,22 +52,12 @@ public class PostsService {
          Optional<Posts> findPost = postsRepository.findById(postid);
          Posts posts = findPost.orElseThrow( () -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
-        List<Comments> comments = commentsRepository.findByPostsIdOrderByModifiedAtDesc(postid);
-        List<String> comment1 = new ArrayList<>();
-
-        for (Comments add : comments){
-           String comment = add.getContents();
-           comment1.add(comment);
-        }
-
-
 
 
          return PostsResponseDto.builder()
                  .id(posts.getId())
                  .contents(posts.getContents())
                  .imgUrl(posts.getImgUrl())
-                 .comment(comment1)
                  .build();
 
     }

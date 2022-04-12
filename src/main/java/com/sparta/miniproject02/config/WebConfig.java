@@ -23,8 +23,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "http://3.35.27.159:8080") // 건드려야함.
                 .allowedMethods("POST", "GET", "PUT", "DELETE", "HEAD", "OPTIONS")
-                .allowedHeaders("*")
-                .maxAge(3000)
                 .allowCredentials(true);
     }
 
