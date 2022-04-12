@@ -1,4 +1,4 @@
-
+//
 //package com.sparta.miniproject02.config;
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +8,7 @@
 //import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
+//import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 //import org.springframework.web.servlet.config.annotation.CorsRegistry;
 //import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //
@@ -20,8 +21,10 @@
 //    @Override
 //    public void addCorsMappings(CorsRegistry registry) {
 //        registry.addMapping("/**")
-//                .allowedOrigins("*") // 건드려야함.
+//                .allowedOrigins("http://localhost:3000", "http://3.35.27.159:8080") // 건드려야함.
 //                .allowedMethods("POST", "GET", "PUT", "DELETE", "HEAD", "OPTIONS")
+//                .allowedHeaders("*")
+//                .maxAge(3000)
 //                .allowCredentials(true);
 //    }
 //
@@ -33,7 +36,7 @@
 //            context.setCookieProcessor(cookieProcessor);
 //        };
 //    }
-//
+////
 ////    @Bean
 ////    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
 ////        ObjectMapper copy = objectMapper.copy();

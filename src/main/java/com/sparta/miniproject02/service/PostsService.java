@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,12 +50,22 @@ public class PostsService {
          Optional<Posts> findPost = postsRepository.findById(postid);
          Posts posts = findPost.orElseThrow( () -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
+        List<Comments> comments = commentsRepository.findByPostsIdOrderByModifiedAtDesc(postid);
+        List<String> comment1 = new ArrayList<>();
+
+        for (Comments add : comments){
+           String comment = add.getContents();
+           comment1.add(comment);
+        }
+
+
 
 
          return PostsResponseDto.builder()
                  .id(posts.getId())
                  .contents(posts.getContents())
                  .imgUrl(posts.getImgUrl())
+                 .comment(comment1)
                  .build();
 
     }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="http://localhost:3000, http://3.35.27.159:8080")
 public class LikesController {
     private final LikesService likesService;
 
