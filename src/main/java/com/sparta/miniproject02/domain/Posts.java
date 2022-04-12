@@ -1,6 +1,7 @@
 package com.sparta.miniproject02.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sparta.miniproject02.dto.PostsRequestDto;
 import lombok.*;
 
@@ -32,7 +33,8 @@ public class Posts extends Timestamped{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "posts" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({"posts"})
+    @OneToMany(mappedBy = "posts" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Comments> commentsList;
 
 

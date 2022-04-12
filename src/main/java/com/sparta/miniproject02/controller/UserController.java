@@ -35,9 +35,21 @@ public class UserController {
 
     }
 
+    //아이디 중복확인
+    @PostMapping("/api/user/checkid")
+    public void checkId(@RequestBody SignupRequestDto signupRequestDto) {
+
+        userService.checksId(signupRequestDto.getUserId());
+    }
+    @PostMapping("/api/user/checkusername")
+    public void checkUsername(@RequestBody SignupRequestDto signupRequestDto){
+        userService.checkUsername(signupRequestDto.getUsername());
+    }
+
     //로그인 성공
     @PostMapping("/api/user/login")
     public List<Map<String,String>> login(@RequestBody SignupRequestDto requestDto) {
+
         User user = userRepository.findByUsername(requestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 username 입니다."));
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
@@ -64,11 +76,6 @@ public class UserController {
 //    }
 
 
-    //아이디 중복확인
-    @PostMapping("/api/user/checkid")
-    public String checkId(@RequestBody SignupRequestDto signupRequestDto) {
 
-        return userService.checksId(signupRequestDto.getUsername());
-    }
 
 }

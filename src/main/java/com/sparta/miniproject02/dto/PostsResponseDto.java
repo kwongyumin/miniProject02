@@ -14,7 +14,7 @@ import java.util.List;
 public class PostsResponseDto {
 
 
-//    private Long id;
+    private Long id;
     private String username;
     private String contents;
     private String imgUrl;
