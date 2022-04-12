@@ -4,9 +4,12 @@ import com.sparta.miniproject02.config.JwtTokenProvider;
 import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.domain.User;
 import com.sparta.miniproject02.dto.SignupRequestDto;
+import com.sparta.miniproject02.exception.UserException;
+import com.sparta.miniproject02.exception.UserExceptionType;
 import com.sparta.miniproject02.repository.UserRepository;
 import com.sparta.miniproject02.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,13 +74,18 @@ public class UserController {
 
 
 
+    @GetMapping("/auth")
+    public Map<String, String> loginCheck(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails == null) {
+            throw new UserException(UserExceptionType.ALREADY_EXIST_USERID);
+        }
+        Map<String, String> result = new HashMap<>();
+        result.put("userId", userDetails.getUser().getUserId());
+        result.put("username", userDetails.getUsername());
+        result.put("result", "success");
 
-//
-//    //카카오 회원가입 및 로그인 요청 처리
-//    @GetMapping("/user/kakao/callback")
-//    public List<Map<String,String>> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-//        return kakaoUserService.kakaoLogin(code, response);
-//    }
+        return result;
+    }
 
 
 
