@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="http://localhost:3000, http://3.35.27.159:8080")
+//@CrossOrigin(origins ="http://localhost:3000, http://3.35.27.159:8080")
 public class PostsController {
 
     private final CommentsRepository commentsRepository;

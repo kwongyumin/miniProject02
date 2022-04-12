@@ -1,5 +1,6 @@
 package com.sparta.miniproject02.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sparta.miniproject02.config.JwtTokenProvider;
 import com.sparta.miniproject02.domain.User;
 import com.sparta.miniproject02.dto.SignupRequestDto;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="http://localhost:3000, http://3.35.27.159:8080")
+//@CrossOrigin(origins ="http://localhost:3000, http://3.35.27.159:8080")
 public class UserController {
 
     private final UserService userService;
