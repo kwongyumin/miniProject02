@@ -5,6 +5,7 @@ import com.sparta.miniproject02.dto.CommentsRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.awt.peer.CanvasPeer;
 
 @AllArgsConstructor
 @NoArgsConstructor
