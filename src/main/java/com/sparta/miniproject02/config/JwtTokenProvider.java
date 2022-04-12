@@ -34,9 +34,9 @@ public class JwtTokenProvider {
     }
 
     // 토큰 생성
-    public String createToken(String username,String userPk) {
+    public String createToken(String userId,String userPk) {
         Claims claims = Jwts.claims().setSubject(userPk);
-        claims.put("username", username);
+        claims.put("userId", userId);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
