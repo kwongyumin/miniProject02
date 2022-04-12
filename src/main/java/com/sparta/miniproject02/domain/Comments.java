@@ -1,6 +1,7 @@
 package com.sparta.miniproject02.domain;
 
 
+import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.dto.CommentsRequestDto;
 import lombok.*;
 
@@ -19,6 +20,9 @@ public class Comments extends Timestamped {
     private Long id;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String contents;
 
     @ManyToOne
@@ -29,9 +33,10 @@ public class Comments extends Timestamped {
 
 
 
-    public Comments(CommentsRequestDto commentsRequestDto, Posts posts){
+    public Comments(CommentsRequestDto commentsRequestDto, Posts posts, String username){
         this.contents = commentsRequestDto.getContents();
         this.posts = posts;
+        this.username = username;
     }
 
 

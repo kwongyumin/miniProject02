@@ -1,12 +1,14 @@
 package com.sparta.miniproject02.controller;
 
 import com.sparta.miniproject02.config.JwtTokenProvider;
+import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.domain.User;
 import com.sparta.miniproject02.dto.SignupRequestDto;
 import com.sparta.miniproject02.repository.UserRepository;
 import com.sparta.miniproject02.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +68,7 @@ public class UserController {
         tu.add(token); //List형태 ["token" : {token}]
         return tu; // List형태 ["username" : {username}, "token" : {token}]
     }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.sparta.miniproject02.service;
 
 
+import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.PostsRequestDto;
 import com.sparta.miniproject02.dto.PostsResponseDto;
@@ -29,12 +30,15 @@ public class PostsService {
 
 
 
+
+
     // 단일 객체 저장 
     @Transactional
-    public void Posting(PostsRequestDto postsRequestDto) {
+    public void Posting(PostsRequestDto postsRequestDto, UserDetailsImpl userDetails) {
 
         Posts posts = Posts.builder()
                 //.user() JWT 사용
+                .user(userDetails.getUser())
                 .contents(postsRequestDto.getContents())
                 .imgUrl(postsRequestDto.getImgUrl())
                 .build();
