@@ -1,9 +1,11 @@
 package com.sparta.miniproject02.service;
 
 
+import com.sparta.miniproject02.domain.Comments;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.PostsRequestDto;
 import com.sparta.miniproject02.dto.PostsResponseDto;
+import com.sparta.miniproject02.repository.CommentsRepository;
 import com.sparta.miniproject02.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final CommentsRepository commentsRepository;
 
     //전체 포스팅 목록을 조회하여 값을 반환해준다.
     @Transactional
@@ -49,7 +52,7 @@ public class PostsService {
 
 
          return PostsResponseDto.builder()
-//                 .id(posts.getId())
+                 .id(posts.getId())
                  .contents(posts.getContents())
                  .imgUrl(posts.getImgUrl())
                  .build();

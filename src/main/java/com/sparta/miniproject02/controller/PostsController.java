@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,19 +46,30 @@ public class PostsController {
 
     //특정 객체를 찾아서 조회하여준다.
     @GetMapping("/api/posts/{post_id}")
-    public PostsResponseDto findByPostId(@PathVariable(value = "post_id") Long postid){
+    public Map<String,Object> findByPostId(@PathVariable(value = "post_id") Long postid){
 
-        //1번 게시글에 작성한 댓글 리스트 ;
+        Map<String,Object> result = new HashMap<>();
+
+        PostsResponseDto postsResponseDto = postsService.findByPostId(postid);
+
+        result.put("contents",postsResponseDto.getContents());
+        result.put("imgUrl",postsResponseDto.getImgUrl());
+
+        List<Comments> commentsList = commentsRepository.findByPostsIdOrderByModifiedAtDesc(postsResponseDto.getId());
 
 
+        Map<Long,String>getCommentsByList = new HashMap<>();
 
-        //1번 아이디 에 대한 정보가 담겨있음.
-        return postsService.findByPostId(postid);
-            // 1, 2, 3 댓글이 Postid 1 번에 쌓인다. -> list 형태로 받아준다.
+        for(Comments comments : commentsList){
+            Long id = comments.getId();
+            String contents = comments.getContents();
+            getCommentsByList.put(id,contents);
+        }
 
-        ////List<Comments> commentsList = commentsRepository.findByPostsIdOrderByModifiedAtDesc(postid);
-            //
 
+        result.put("comments",getCommentsByList);
+
+        return result;
     }
 
 
