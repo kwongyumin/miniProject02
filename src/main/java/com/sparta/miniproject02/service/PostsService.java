@@ -1,7 +1,6 @@
 package com.sparta.miniproject02.service;
 
 
-import com.sparta.miniproject02.domain.Comments;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.PostsRequestDto;
 import com.sparta.miniproject02.dto.PostsResponseDto;
