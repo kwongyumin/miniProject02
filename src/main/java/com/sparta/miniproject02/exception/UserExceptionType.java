@@ -9,7 +9,7 @@ public enum UserExceptionType implements BaseExceptionType {
     ALREADY_EXIST_USERNAME(600, HttpStatus.CONFLICT,"이미 존재하는 닉네임입니다."),
     WRONG_PASSWORD(602,HttpStatus.BAD_REQUEST, "비밀번호가 잘못되었습니다."),
     NOT_FOUND_MEMBER(603, HttpStatus.NOT_FOUND, "회원 정보가 없습니다."),
-    LOGIN_TOKEN_EXPIRE(604, HttpStatus.NOT_FOUND, "토큰이 존재하지 않습니다..");
+    LOGIN_TOKEN_EXPIRE(604, HttpStatus.NOT_FOUND, "토큰이 존재하지 않습니다.");
 
 
     private int errorCode;
