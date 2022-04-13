@@ -40,5 +40,10 @@ public class CommentsController {
         return commentsService.updateComments(commentId, commentsRequestDto);
     }
 
+    //댓글 갯수
+    @GetMapping("/api/comments/{postId}")
+    public int commentCnt(@PathVariable Long postId){
+        return commentsService.commentCnt(postId);
+    }
 
 }
