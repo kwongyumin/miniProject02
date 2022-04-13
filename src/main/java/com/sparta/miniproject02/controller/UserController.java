@@ -85,9 +85,6 @@ public class UserController {
 
      */
 
-
-
-
     @GetMapping("/auth")
     public Map<String, String> userInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (userDetails == null) {

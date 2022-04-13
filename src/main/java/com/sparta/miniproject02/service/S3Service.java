@@ -52,6 +52,7 @@ public class S3Service {
     // 최초 게시글 작성 시 업로드
     public String upload(MultipartFile file){
         String fileName = createFileName(file.getOriginalFilename());
+
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
@@ -60,6 +61,7 @@ public class S3Service {
             s3Client.putObject(new PutObjectRequest(bucket,fileName,inputStream,objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
             return s3Client.getUrl(bucket, fileName).toString();
+
         }catch (IOException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"파일 업로드에 실패하셨습니다");
         }
