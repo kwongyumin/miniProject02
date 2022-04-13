@@ -41,6 +41,7 @@ public class PostsService {
 
         postsRepository.save(posts);
     }
+
     // 단일 객체를 찾아서 반환
     @Transactional
     public PostsResponseDto findByPostId(Long postid) {

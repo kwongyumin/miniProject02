@@ -20,8 +20,9 @@ public class CommentsController {
             @RequestBody CommentsRequestDto commentsRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails){
         commentsService.createComments(postId, commentsRequestDto, userDetails);
-
     }
+
+
 
     //댓글 삭제
     @DeleteMapping("/api/comments/{commentId}")
