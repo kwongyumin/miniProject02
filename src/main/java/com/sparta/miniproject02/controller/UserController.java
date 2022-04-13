@@ -22,7 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-
 public class UserController {
 
     private final UserService userService;
@@ -69,6 +68,8 @@ public class UserController {
         System.out.println(result.get("token"));
         result.put("userId",user.getUserId());
         result.put("username",user.getUsername());
+
+        System.out.println("토큰 만들어지나? " + result);
 
 
         return result;

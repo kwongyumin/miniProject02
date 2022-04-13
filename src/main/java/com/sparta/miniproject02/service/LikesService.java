@@ -1,5 +1,6 @@
 package com.sparta.miniproject02.service;
 
+import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.domain.Likes;
 import com.sparta.miniproject02.domain.Posts;
 import com.sparta.miniproject02.dto.LikeRequestDto;
@@ -15,11 +16,10 @@ import java.util.Optional;
 public class LikesService {
 
     private final LikesRepository likesRepository;
-    private final PostsRepository postsRepository;
 
-    public boolean getLikes(LikeRequestDto likeRequestDto) {
+    public boolean getLikes(LikeRequestDto likeRequestDto, UserDetailsImpl userDetails) {
         Long postId = likeRequestDto.getPostId();
-        Long likeUser = likeRequestDto.getLikeUserId();
+        Long likeUser = userDetails.getUser().getId();
 //        Posts posts = postsRepository.findById(postId).orElseThrow(
 //                () -> new NullPointerException("해당 게시글이 존재하지 않습니다.")
 //        );
@@ -36,8 +36,5 @@ public class LikesService {
             likesRepository.save(likes1);
             return true;
         }
-
-
-
     }
 }
