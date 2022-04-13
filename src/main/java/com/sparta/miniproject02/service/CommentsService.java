@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +44,16 @@ public class CommentsService {
                 () -> new NullPointerException("해당 댓글이 존재하지 않습니다.")
         );
         return comments.update(commentsRequestDto);
+    }
+
+    //댓글 갯수
+    public int commentCnt(Long postId) {
+        List<Comments> commentsList = commentsRepository.findByPostsId(postId);
+        List<Comments> comment = new ArrayList<>();
+        for (Comments comments : commentsList){
+            comment.add(comments);
+        }
+      int commentCnt = comment.size();
+        return commentCnt;
     }
 }
