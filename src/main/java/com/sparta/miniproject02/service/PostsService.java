@@ -31,10 +31,10 @@ public class PostsService {
 
     // 단일 객체 저장 
     @Transactional
-    public void Posting(PostsRequestDto postsRequestDto) {
+    public void Posting(PostsRequestDto postsRequestDto,UserDetailsImpl userDetails) {
 
         Posts posts = Posts.builder()
-                //.user() JWT 사용
+                .user(userDetails.getUser())
                 .contents(postsRequestDto.getContents())
                 .imgUrl(postsRequestDto.getImgUrl())
                 .build();
@@ -60,15 +60,13 @@ public class PostsService {
     }
     // 객체 수정
     @Transactional
-    public Long postUpdate(Long postid, PostsRequestDto postsRequestDto) {
+    public void postUpdate(Long postid, PostsRequestDto postsRequestDto) {
 
         Optional<Posts> findPost = postsRepository.findById(postid);
         Posts posts = findPost.orElseThrow( () -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
 
   
         posts.update(postsRequestDto);
-        
-        return posts.getId();
 
     }
     

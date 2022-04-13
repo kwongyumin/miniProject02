@@ -51,13 +51,15 @@ public class PostsController {
 
 
     //요청값을 받아와 저장한다.
+    //글 작성 시는 무조건 로그인 상태여야한다.
     @PostMapping("/api/posts/write")
-    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file) {
+    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
+                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String imgPath = s3Service.upload(file);
         //이미지 경로를 받아온다.
         postsRequestDto.setImgUrl(imgPath);
         //Dto에 담아준뒤 , 서비스 로직에 넘긴다.
-        postsService.Posting(postsRequestDto);
+        postsService.Posting(postsRequestDto,userDetails);
     }
 
     //특정 객체를 찾아서 조회하여준다.
@@ -90,26 +92,55 @@ public class PostsController {
         return result;
     }
 
+//
+//    //객체 pk를 받아와서 수정 ,
+//    @PutMapping("/api/posts/modify/{post_id}")
+//    public Long postModifyById(@PathVariable(value = "post_id") Long postid
+//            ,@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
+//                               @AuthenticationPrincipal UserDetailsImpl userDetails){
+//
+//        //파일을 받아와서 기존의 저장되어있는 값은 삭제한뒤 , 포스트 업데이트,
+//        String imgPath = s3Service.upload(file,postsRequestDto.getImgUrl());
+//
+//        postsRequestDto.setImgUrl(imgPath);
+//        return postsService.postUpdate(postid, postsRequestDto);
+//        //객체가 성공적으로 수정된다면 , pk값을 반환 . -> pk값 활용하여 수정완료후의 페이지로 이동가능하다
+//
+//    }
 
-    //객체 pk를 받아와서 수정 ,
     @PutMapping("/api/posts/modify/{post_id}")
-    public Long postModifyById(@PathVariable(value = "post_id") Long postid
-            ,@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file){
+    public Map<String,Object> postModifyById(@PathVariable(value = "post_id") Long postid
+            ,@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
+
+        Map<String,Object> result = new HashMap<>();
 
         //파일을 받아와서 기존의 저장되어있는 값은 삭제한뒤 , 포스트 업데이트,
         String imgPath = s3Service.upload(file,postsRequestDto.getImgUrl());
-
         postsRequestDto.setImgUrl(imgPath);
-        return postsService.postUpdate(postid, postsRequestDto);
-        //객체가 성공적으로 수정된다면 , pk값을 반환 . -> pk값 활용하여 수정완료후의 페이지로 이동가능하다
+        postsService.postUpdate(postid, postsRequestDto);
+
+
+        result.put("userId",userDetails.getUser().getUserId());
+        return result;
 
     }
 
+
+
     //객체 pk를 받아와 삭제한다.
     @DeleteMapping("/api/posts/delete/{post_id}")
-    public void postDeleteById(@PathVariable(value = "post_id") Long postid){
+    public Map<String,Object> postDeleteById(@PathVariable(value = "post_id") Long postid,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
 
+        Map<String,Object> result = new HashMap<>();
+
+        //게시글 pk값에 맞는 글을 삭제,
         postsService.postDelete(postid);
+
+        result.put("userId",userDetails.getUser().getUserId());
+
+        return result;
     }
 
 }
