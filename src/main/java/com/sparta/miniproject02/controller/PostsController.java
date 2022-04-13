@@ -27,38 +27,37 @@ public class PostsController {
     private final PostsService postsService;
     private final S3Service s3Service;
 
-    //포스팅 전체목록을 리턴한다.
-//    @GetMapping("/api/posts")
-//    public List<Posts> findAllPosts(){
-//
-//        return postsService.findAllPosts();
-//
-//    }
-
+//    포스팅 전체목록을 리턴한다.
     @GetMapping("/api/posts")
-    public Map<String,Object> findAllPosts(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        Map<String,Object> result = new HashMap<>();
-         String username = userDetails.getUsername();
+    public List<Posts> findAllPosts(){
 
-         List<Posts> findAllPostsList = postsService.findAllPosts();
+        return postsService.findAllPosts();
 
-         result.put("username",username);
-         result.put("result",findAllPostsList);
-
-         return result;
     }
+//
+//    @GetMapping("/api/posts")
+//    public Map<String,Object> findAllPosts(@AuthenticationPrincipal UserDetailsImpl userDetails){
+//        Map<String,Object> result = new HashMap<>();
+//         String username = userDetails.getUsername();
+//
+//         List<Posts> findAllPostsList = postsService.findAllPosts();
+//
+//         result.put("username",username);
+//         result.put("result",findAllPostsList);
+//
+//         return result;
+//    }
 
 
 
     //요청값을 받아와 저장한다.
     @PostMapping("/api/posts/write")
-    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
-                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file) {
         String imgPath = s3Service.upload(file);
         //이미지 경로를 받아온다.
         postsRequestDto.setImgUrl(imgPath);
         //Dto에 담아준뒤 , 서비스 로직에 넘긴다.
-        postsService.Posting(postsRequestDto, userDetails);
+        postsService.Posting(postsRequestDto);
     }
 
     //특정 객체를 찾아서 조회하여준다.

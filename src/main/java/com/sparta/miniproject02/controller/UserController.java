@@ -46,6 +46,8 @@ public class UserController {
 
         userService.checksId(signupRequestDto.getUserId());
     }
+
+    //username 중복확인
     @PostMapping("/api/user/checkusername")
     public void checkUsername(@RequestBody SignupRequestDto signupRequestDto){
         userService.checkUsername(signupRequestDto.getUsername());
