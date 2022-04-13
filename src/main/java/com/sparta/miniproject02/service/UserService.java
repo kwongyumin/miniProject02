@@ -51,6 +51,7 @@ public class UserService {
         }
 
     }
+
     //회원가입 버튼 클릭 전 중복검사.
     public void checkUsername(String username) {
         Optional<User> getUsername = userRepository.findByUsername(username);

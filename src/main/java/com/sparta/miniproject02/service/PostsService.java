@@ -29,16 +29,12 @@ public class PostsService {
     }
 
 
-
-
-
     // 단일 객체 저장 
     @Transactional
-    public void Posting(PostsRequestDto postsRequestDto, UserDetailsImpl userDetails) {
+    public void Posting(PostsRequestDto postsRequestDto) {
 
         Posts posts = Posts.builder()
                 //.user() JWT 사용
-                .user(userDetails.getUser())
                 .contents(postsRequestDto.getContents())
                 .imgUrl(postsRequestDto.getImgUrl())
                 .build();
