@@ -19,6 +19,7 @@ public class UserDetailsImpl implements UserDetails {
         return user;
     }
 
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -26,7 +27,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getUserId();
     }
 
     @Override
