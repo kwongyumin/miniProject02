@@ -64,7 +64,7 @@ public class UserController {
 
         Map<String,String> result = new HashMap<>();
 
-        result.put("token",jwtTokenProvider.createToken(user.getUserId(), Long.toString(user.getId())));
+        result.put("token",jwtTokenProvider.createToken(user.getUserId(), Long.toString(user.getId()), user.getUsername()));
         System.out.println(result.get("token"));
         result.put("userId",user.getUserId());
         result.put("username",user.getUsername());
