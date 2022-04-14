@@ -53,13 +53,12 @@ public class PostsController {
     //요청값을 받아와 저장한다.
     //글 작성 시는 무조건 로그인 상태여야한다.
     @PostMapping("/api/posts/write")
-    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
-                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file) {
         String imgPath = s3Service.upload(file);
         //이미지 경로를 받아온다.
         postsRequestDto.setImgUrl(imgPath);
         //Dto에 담아준뒤 , 서비스 로직에 넘긴다.
-        postsService.Posting(postsRequestDto,userDetails);
+        postsService.Posting(postsRequestDto);
     }
 
     //특정 객체를 찾아서 조회하여준다.
@@ -110,8 +109,7 @@ public class PostsController {
 
     @PutMapping("/api/posts/modify/{post_id}")
     public Map<String,Object> postModifyById(@PathVariable(value = "post_id") Long postid
-            ,@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file,
-                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
+            ,@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file){
 
         Map<String,Object> result = new HashMap<>();
 
@@ -119,9 +117,6 @@ public class PostsController {
         String imgPath = s3Service.upload(file,postsRequestDto.getImgUrl());
         postsRequestDto.setImgUrl(imgPath);
         postsService.postUpdate(postid, postsRequestDto);
-
-
-        result.put("userId",userDetails.getUser().getUserId());
         return result;
 
     }
@@ -130,15 +125,12 @@ public class PostsController {
 
     //객체 pk를 받아와 삭제한다.
     @DeleteMapping("/api/posts/delete/{post_id}")
-    public Map<String,Object> postDeleteById(@PathVariable(value = "post_id") Long postid,
-                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public Map<String,Object> postDeleteById(@PathVariable(value = "post_id") Long postid){
 
         Map<String,Object> result = new HashMap<>();
 
         //게시글 pk값에 맞는 글을 삭제,
         postsService.postDelete(postid);
-
-        result.put("userId",userDetails.getUser().getUserId());
 
         return result;
     }

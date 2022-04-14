@@ -22,12 +22,12 @@ public class CommentsService {
 
     //댓글 작성
     @Transactional
-    public void createComments(Long postId, CommentsRequestDto commentsRequestDto, UserDetailsImpl userDetails) {
+    public void createComments(Long postId, CommentsRequestDto commentsRequestDto) {
         Posts posts = postsRepository.findById(postId).orElseThrow(
                 () -> new NullPointerException("해당 게시글이 존재하지 않습니다.")
         );
 
-        Comments comments = new Comments(commentsRequestDto,posts,userDetails.getUsername());
+        Comments comments = new Comments(commentsRequestDto,posts);
         commentsRepository.save(comments);
     }
 

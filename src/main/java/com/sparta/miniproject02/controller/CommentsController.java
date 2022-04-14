@@ -17,9 +17,8 @@ public class CommentsController {
     @PostMapping("/api/comments/{postId}")
     public void createComments(
             @PathVariable Long postId,
-            @RequestBody CommentsRequestDto commentsRequestDto,
-            @AuthenticationPrincipal UserDetailsImpl userDetails){
-        commentsService.createComments(postId, commentsRequestDto, userDetails);
+            @RequestBody CommentsRequestDto commentsRequestDto){
+        commentsService.createComments(postId, commentsRequestDto);
     }
 
 
