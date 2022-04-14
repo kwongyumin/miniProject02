@@ -19,7 +19,6 @@ import java.util.Optional;
 public class PostsService {
 
     private final PostsRepository postsRepository;
-    private final CommentsRepository commentsRepository;
 
     //전체 포스팅 목록을 조회하여 값을 반환해준다.
     @Transactional
@@ -31,10 +30,9 @@ public class PostsService {
 
     // 단일 객체 저장 
     @Transactional
-    public void Posting(PostsRequestDto postsRequestDto,UserDetailsImpl userDetails) {
+    public void Posting(PostsRequestDto postsRequestDto) {
 
         Posts posts = Posts.builder()
-                .user(userDetails.getUser())
                 .contents(postsRequestDto.getContents())
                 .imgUrl(postsRequestDto.getImgUrl())
                 .build();
@@ -64,8 +62,6 @@ public class PostsService {
 
         Optional<Posts> findPost = postsRepository.findById(postid);
         Posts posts = findPost.orElseThrow( () -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
-
-  
         posts.update(postsRequestDto);
 
     }

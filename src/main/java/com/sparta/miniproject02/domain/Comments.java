@@ -33,10 +33,9 @@ public class Comments extends Timestamped {
 
 
 
-    public Comments(CommentsRequestDto commentsRequestDto, Posts posts, String username){
+    public Comments(CommentsRequestDto commentsRequestDto, Posts posts){
         this.contents = commentsRequestDto.getContents();
         this.posts = posts;
-        this.username = username;
     }
 
 
