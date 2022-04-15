@@ -43,9 +43,9 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
-    }
+}
 
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {

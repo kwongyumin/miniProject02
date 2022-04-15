@@ -27,18 +27,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String gender;
-
 //    @Column(nullable = true)
 //    private Long kakao_id;
 
-    public User(String userId,String username, String password, String gender){
+    public User(String userId,String username, String password){
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.gender = gender;
-
     }
 }
 

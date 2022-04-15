@@ -1,10 +1,8 @@
 package com.sparta.miniproject02.controller;
 
-import com.sparta.miniproject02.config.UserDetailsImpl;
 import com.sparta.miniproject02.dto.CommentsRequestDto;
 import com.sparta.miniproject02.service.CommentsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

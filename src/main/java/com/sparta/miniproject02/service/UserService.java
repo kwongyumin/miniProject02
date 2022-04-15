@@ -37,9 +37,7 @@ public class UserService {
 
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
-        String gender = signupRequestDto.getGender();
-
-        User user = new User(userId, username, password, gender);
+        User user = new User(userId, username, password);
         userRepository.save(user);
 
     }

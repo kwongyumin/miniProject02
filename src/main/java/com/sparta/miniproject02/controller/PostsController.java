@@ -53,12 +53,12 @@ public class PostsController {
     //요청값을 받아와 저장한다.
     //글 작성 시는 무조건 로그인 상태여야한다.
     @PostMapping("/api/posts/write")
-    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file) {
+    public void Posting(@RequestPart PostsRequestDto postsRequestDto, @RequestPart MultipartFile file, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         String imgPath = s3Service.upload(file);
         //이미지 경로를 받아온다.
         postsRequestDto.setImgUrl(imgPath);
         //Dto에 담아준뒤 , 서비스 로직에 넘긴다.
-        postsService.Posting(postsRequestDto);
+        postsService.Posting(postsRequestDto, userDetails);
     }
 
     //특정 객체를 찾아서 조회하여준다.

@@ -30,9 +30,10 @@ public class PostsService {
 
     // 단일 객체 저장 
     @Transactional
-    public void Posting(PostsRequestDto postsRequestDto) {
+    public void Posting(PostsRequestDto postsRequestDto, UserDetailsImpl userDetails) {
 
         Posts posts = Posts.builder()
+                .user(userDetails.getUser())
                 .contents(postsRequestDto.getContents())
                 .imgUrl(postsRequestDto.getImgUrl())
                 .build();
