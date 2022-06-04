@@ -61,23 +61,6 @@
 ![ERD PNG](https://user-images.githubusercontent.com/93507721/163360020-61f95868-3685-4778-b444-bed6ae59cf75.png)
 
 
-<details>
-<summary> API 설계</summary>
-<div markdown="1">
-
-
-![api1](https://user-images.githubusercontent.com/93507721/163361049-9fddba89-c013-4a11-9477-70dc14a298b9.PNG)
-
-![api2](https://user-images.githubusercontent.com/93507721/163361063-91e77461-4fbd-4d01-bfa5-cf36581b97c0.PNG)
-
-![api3](https://user-images.githubusercontent.com/93507721/163361090-c7d4c1b3-7875-4224-b1b1-477ed2abfb0a.PNG)
-  
-
-</div>
-</details>
-
-
-
 ### 🎯 트러블슈팅
 1. 로그인 후 페이지 이동 및 HTTP메서드 요청마다 헤더에 토큰값을 받아와 유효토큰인지 BE단에서 확인 및 검증.
 2. 글 작성 시 이미지 파일과 글내용을 전달받올 때 ,  JSON타입 객체와  MultipartFile 타입 객체를 
