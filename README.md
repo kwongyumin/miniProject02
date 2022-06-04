@@ -1,11 +1,39 @@
-# miniProject02
 # **혼자같이(*aloneighbor*)**
 
-### Team
-- Frontend : 임세영,김다운 (REACT)
-- Backend : 김일권,권규민,심현웅 (SPRING)
+ <div align=center>
+  
+![01](https://user-images.githubusercontent.com/98807506/172003058-73f2b9c1-7f0f-4f3c-9005-8e831c6c395f.png)
+![02](https://user-images.githubusercontent.com/98807506/172003064-057762af-b346-40bc-97bb-fca435fd84a5.png)
+![03](https://user-images.githubusercontent.com/98807506/172003067-181e386c-79f1-40aa-acc4-322f17bf1e6c.png)
 
-# 프로젝트 소개
+</div>
+
+
+## 🗓 프로젝트 기간
+- 2022년 4월 8일 ~ 2022년 4월 14일
+
+
+# ⭐️ 팀 구성
+| 이름     | 깃허브 주소                                                | 포지션     |
+|:--------:|:----------------------------------------------------------:|:-----------:|
+| 권규민 | [https://github.com/kwongyumin](https://github.com/kwongyumin)                     | Backend     |
+| 심현웅   | [https://github.com/hyun-woong](https://github.com/hyun-woong)                     | Backend     |
+| 김일권   | [https://github.com/jjems](https://github.com/jjems) | Backend     |
+| 김다운   | [https://github.com/Daun1309](https://github.com/Daun1309)                     | Frontend |
+| 임세영   | [https://github.com/insidelamp](https://github.com/insidelamp)                     | Frontend |
+
+<br>
+
+# 🍀 프로젝트 소개
+자취생들의 자취 꿀팁 및 자취 추천 아이템 공유 플랫폼
+
+# 📎 구현기능
+- Jwt Security
+- 이미지 CRUD
+- 게시글 CRUD
+- 댓글 CRUD
+- 좋아요
+
 
 ### 키워드
 
